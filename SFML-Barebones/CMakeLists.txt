@@ -9,7 +9,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 # (you can also set it on the command line: -D CMAKE_BUILD_TYPE=Release)
 
-project(Challenge288)
+project(ProjectName)
 
 # Set version information in a config.h file
 set(myproject_VERSION_MAJOR 1)
@@ -21,7 +21,7 @@ configure_file(
 include_directories("${PROJECT_BINARY_DIR}")
 
 # Define sources and executable
-set(EXECUTABLE_NAME "Challenge288")
+set(EXECUTABLE_NAME "ProjectName")
 add_executable(${EXECUTABLE_NAME} main.cpp)
 
 
