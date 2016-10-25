@@ -27,7 +27,7 @@ float rad2Deg(float rad)
 
 void drawLine(sf::Image& img, Point p1, Point p2, const sf::Color& color)
 {
-	float x1 = p1.x, x2 = p2.x, y1 = p1.y, y2 = p2.y;
+	float x1 = (float)p1.x, x2 = (float)p2.x, y1 = (float)p1.y, y2 = (float)p2.y;
 
 	const bool steep = (fabs(y2 - y1) > fabs(x2 - x1)) ;
 
@@ -78,11 +78,9 @@ void drawStar(sf::Image& img, unsigned int n, unsigned int size)
 
 	const float angleOffset = deg2Rad(90) - angleStep; //To make the tip point upwards
 
-	cout << n << " steps of " << rad2Deg(angleStep) << " degrees" << endl;
-
 	vector<Point> points(n);
 
-	for (int i = 0; i < n; i++)
+	for (unsigned int i = 0; i < n; i++)
 	{
 		points[i].x = (int)(0.5f + (img.getSize().x / 2) + (size * cos((i * angleStep) - angleOffset)));
 		points[i].y = (int)(0.5f + (img.getSize().y / 2) + (size * sin((i * angleStep) - angleOffset)));
@@ -90,7 +88,7 @@ void drawStar(sf::Image& img, unsigned int n, unsigned int size)
 
 	if (n % 2 == 0)
 	{
-		for (int i = 0; i < (n - 2) / 2; i++)
+		for (unsigned int i = 0; i < (n - 2) / 2; i++)
 		{
 			drawLine(img, points[i], points[i + (n / 2) - 1], sf::Color::Black);
 			drawLine(img, points[i], points[i + (n / 2) + 1], sf::Color::Black);
@@ -100,13 +98,20 @@ void drawStar(sf::Image& img, unsigned int n, unsigned int size)
 	}
 	else
 	{
-		for (int i = 0; i < n / 2; i++)
+		for (unsigned int i = 0; i < n / 2; i++)
 		{
 			drawLine(img, points[i], points[i + (n / 2)], sf::Color::Black);
 			drawLine(img, points[i], points[i + (n / 2) + 1], sf::Color::Black);
 		}
 		drawLine(img, points[n / 2], points.back(), sf::Color::Black);
 	}
+
+	for (int i = 0; i < points.size() - 1; i++)
+	{
+		drawLine(img, points[i], points[i + 1], sf::Color::Red);
+	}
+	drawLine(img, points.back(), points.front(), sf::Color::Red);
+
 }
 
 void drawStar(sf::Image& img, unsigned int n)
@@ -120,9 +125,9 @@ int main(int argc, char* argv[]) {
 
 	sf::Image starImage;
 
-	starImage.create(255, 255, sf::Color::White);
+	starImage.create(1024, 1024, sf::Color::White);
 
-	drawStar(starImage, 20);
+	drawStar(starImage, 200, 500);
 
 	starImage.saveToFile("Star-Image.png");
 
